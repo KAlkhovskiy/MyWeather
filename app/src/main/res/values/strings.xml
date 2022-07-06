@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">MyWeather</string>
+    <string name="input_hint">Введите город</string>
+    <string name="no_user_input">Введите город</string>
+    <string name="API_err">Ошибка выполнения запроса</string>
+    <string name="auto_button">Определение города по геолокации</string>
+    <string name="hand_button">Ручной ввод города</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="textview">TextView</string>
 </resources>
