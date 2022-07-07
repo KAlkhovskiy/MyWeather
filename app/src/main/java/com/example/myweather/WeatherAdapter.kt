@@ -1,5 +1,6 @@
 package com.example.myweather
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,11 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myweather.databinding.ListItemBinding
 
 class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.Holder>() {
-    var dayList = ArrayList<DayInfo>()
+    private var dayList = ArrayList<DayInfo>()
 
     class Holder(view: View): RecyclerView.ViewHolder(view){
 
-        val binding = ListItemBinding.bind(view)
+        private val binding = ListItemBinding.bind(view)
+        @SuppressLint("SetTextI18n")
         fun bind(elem: DayInfo) = with(binding){
             dayTime.text = elem.dayTime
             MaxMinTemp.text = "${elem.tempMin}°C/${elem.tempMax}°C"
@@ -33,11 +35,12 @@ class WeatherAdapter : RecyclerView.Adapter<WeatherAdapter.Holder>() {
         return dayList.size
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     fun addDay(day: DayInfo){
         dayList.add(day)
         notifyDataSetChanged()
     }
-    fun cleardayList(){
+    fun clearDayList(){
         dayList = ArrayList<DayInfo>()
     }
 }

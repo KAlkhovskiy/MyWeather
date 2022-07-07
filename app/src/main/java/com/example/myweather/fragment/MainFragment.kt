@@ -25,7 +25,6 @@ import com.example.myweather.DayInfo
 import com.example.myweather.R
 import com.example.myweather.WeatherAdapter
 import com.example.myweather.databinding.FragmentMainBinding
-import com.google.android.gms.location.LocationServices
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -81,10 +80,10 @@ class MainFragment : Fragment(), LocationListener {
                 Toast.makeText(activity as AppCompatActivity, R.string.no_user_input, Toast.LENGTH_SHORT).show()
             else {
                 val url =
-                    "https://api.openweathermap.org/data/2.5/forecast?q=${city?.text.toString()}" +
+                    "https://api.openweathermap.org/data/2.5/forecast?q=${city.text}" +
                             "&appid=$key&lang=ru&units=metric"
                 CoroutineScope(Dispatchers.IO).launch {
-                    GetURLData(url)
+                    getURLData(url)
                 }
             }
         }
@@ -121,7 +120,7 @@ class MainFragment : Fragment(), LocationListener {
     }
 
     @SuppressLint("SetTextI18n")
-    private fun GetURLData(url: String) {
+    private fun getURLData(url: String) {
         val queue = Volley.newRequestQueue(activity as AppCompatActivity)
         val stringRequest = StringRequest(
             Request.Method.GET,
@@ -148,17 +147,17 @@ class MainFragment : Fragment(), LocationListener {
                 binding.img.setImageResource(getImg(day.getJSONArray("weather").getJSONObject(0)
                     .getString("description")))
 
-                adapter.cleardayList()
+                adapter.clearDayList()
                 for (elem in 1..obj.getInt("cnt") step 4){
-                    val day = obj.getJSONArray("list").getJSONObject(elem)
-                    val dayInfo: DayInfo = DayInfo(day.getString("dt_txt"),
-                        day.getJSONArray("weather").getJSONObject(0)
+                    val oneDay = obj.getJSONArray("list").getJSONObject(elem)
+                    val dayInfo = DayInfo(oneDay.getString("dt_txt"),
+                        oneDay.getJSONArray("weather").getJSONObject(0)
                             .getString("description"),
-                        day.getJSONObject("main").getInt("temp_min")
+                        oneDay.getJSONObject("main").getInt("temp_min")
                             .toString(),
-                        day.getJSONObject("main").getInt("temp_max")
+                        oneDay.getJSONObject("main").getInt("temp_max")
                             .toString(),
-                        getImg(day.getJSONArray("weather").getJSONObject(0)
+                        getImg(oneDay.getJSONArray("weather").getJSONObject(0)
                             .getString("description"))
                     )
                     adapter.addDay(dayInfo)
@@ -201,11 +200,11 @@ class MainFragment : Fragment(), LocationListener {
         val latitude = location.latitude
         val longitude = location.longitude
         val url =
-            "https://api.openweathermap.org/data/2.5/forecast?lat=${latitude.toString()}" +
-                    "&lon=${longitude.toString()}&appid=$key&lang=ru&units=metric"
+            "https://api.openweathermap.org/data/2.5/forecast?lat=$latitude" +
+                    "&lon=$longitude&appid=$key&lang=ru&units=metric"
 
         CoroutineScope(Dispatchers.IO).launch {
-            GetURLData(url)
+            getURLData(url)
         }
 
     }
