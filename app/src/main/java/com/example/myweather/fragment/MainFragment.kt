@@ -25,7 +25,6 @@ class MainFragment : Fragment() {
     private lateinit var binding: FragmentMainBinding
     private val dataModel: MainViewModel by activityViewModels()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -81,6 +80,7 @@ class MainFragment : Fragment() {
             launcher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
         }
     }
+
 
     companion object {
 
